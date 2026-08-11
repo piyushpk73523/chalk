@@ -1,0 +1,36 @@
+# Use the official Node.js 20 Alpine image as the base image
+FROM node:20-alpine
+
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Copy package.json and lock files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
+
+# Copy the packages directory
+COPY ./packages ./packages
+
+# Copy the chalk-http app
+COPY ./apps/chalk-http ./apps/chalk-http
+
+# Install dependencies
+RUN pnpm install
+
+# Set the DATABASE_URL environment variable (ensure it's passed during build)
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
+
+# Generate Prisma client
+RUN pnpm run db:generate
+
+# Build the application
+RUN pnpm run build
+
+# Expose the port the app will run on
+EXPOSE 8080
+
+# Command to run the application
+CMD ["pnpm", "run", "start:backend"]
