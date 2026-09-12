@@ -1,9 +1,19 @@
+// const isLocal = process.env.NODE_ENV === "development";
+
+// export const BACKEND_URL = isLocal
+//   ? "http://localhost:8080" // Use localhost for development
+//   : "https://api.chalk.hm0.org"; // Use production URL for deployment
+
+// export const WEBSOCKET_URL = isLocal
+//   ? "wss://localhost:8081" // Use localhost for development
+//   : "https://ws.chalk.hm0.org"; // Use WS (secure WebSocket)
+
 const isLocal = process.env.NODE_ENV === "development";
 
 export const BACKEND_URL = isLocal
-  ? "http://localhost:8080" // Use localhost for development
-  : "https://api.chalk.hm0.org"; // Use production URL for deployment
+  ? "http://localhost:8080"
+  : "https://chalk-backend-fgw2.onrender.com";
 
 export const WEBSOCKET_URL = isLocal
-  ? "wss://localhost:8081" // Use localhost for development
-  : "https://ws.chalk.hm0.org"; // Use WS (secure WebSocket)
+  ? "ws://localhost:8081"
+  : "wss://chalk-websocket.onrender.com";
